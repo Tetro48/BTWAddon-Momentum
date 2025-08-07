@@ -13,41 +13,29 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerControllerMP.class)
 public abstract class PlayerControllerMPMixin {
 	@Shadow private int blockHitDelay;
 	@Shadow @Final private Minecraft mc;
-	@Unique private int blocksDestroyed = 0;
-	@Unique public int ticksUntilDecay = 0;
+	@Unique private int curSwiftLevel = 0;
 
 	@ModifyConstant(method = "onPlayerDamageBlock", constant = @Constant(intValue = 5))
 	private int changeBlockDelay(int constant) {
-		return constant - (blocksDestroyed / 10);
+		return constant - curSwiftLevel;
 	}
-	@Inject(method = "onPlayerDamageBlock", at = @At("HEAD"))
-	private void whileBreaking(int par1, int par2, int par3, int par4, CallbackInfo ci) {
-		ticksUntilDecay = 20;
-	}
-	@Inject(method = "onPlayerDestroyBlock", at = @At(ordinal = 1, value = "FIELD", target = "Lnet/minecraft/src/PlayerControllerMP;blockHitDelay:I", shift = At.Shift.AFTER), cancellable = true)
-	private void countBlockBreaks(int par1, int par2, int par3, int par4, CallbackInfoReturnable<Boolean> cir) {
-		this.blockHitDelay -= blocksDestroyed / 10;
-		if (EnchantmentHelper.getEnchantmentLevel(MomentumAddon.enchantmentMomentum.effectId, this.mc.thePlayer.getHeldItem()) > 0) {
-			ticksUntilDecay = 20;
-			((MomentumAffected)this.mc.thePlayer).momentum$incrementBlocksBroken();
+	@Inject(method = "onPlayerDestroyBlock", at = @At(ordinal = 1, value = "FIELD", target = "Lnet/minecraft/src/PlayerControllerMP;blockHitDelay:I", shift = At.Shift.AFTER))
+	private void onBlockBreak(int par1, int par2, int par3, int par4, CallbackInfoReturnable<Boolean> cir) {
+		int swiftLevel = EnchantmentHelper.getEnchantmentLevel(MomentumAddon.enchantmentSwift.effectId, this.mc.thePlayer.getHeldItem());
+		curSwiftLevel = swiftLevel;
+		this.blockHitDelay -= swiftLevel;
+		boolean hasMomentum = EnchantmentHelper.getEnchantmentLevel(MomentumAddon.enchantmentMomentum.effectId, this.mc.thePlayer.getHeldItem()) > 0;
+		if (hasMomentum) {
+			((MomentumAffected) this.mc.thePlayer).momentum$incrementBlocksBroken();
 		}
-	}
-	@Inject(method = "resetBlockRemoving", at = @At("RETURN"))
-	private void resetBlockBreaks(CallbackInfo ci) {
-	}
-	@Inject(method = "updateController", at = @At("HEAD"))
-	private void decrementTicksUntilDecay(CallbackInfo ci) {
-		ticksUntilDecay--;
-		if (ticksUntilDecay <= 0) {
-			((MomentumAffected)this.mc.thePlayer).momentum$decayBlocksBroken();
+		else {
+			((MomentumAffected) this.mc.thePlayer).momentum$resetBlocksBroken();
 		}
-		blocksDestroyed = ((MomentumAffected)this.mc.thePlayer).momentum$getBlocksBroken();
 	}
 }

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "momentum_btw",
   "version": "${version}",
-  "name": "Momentum Enchantment Addon",
+  "name": "Momentum and Swift Enchantments Addon",
   "description": "This is an example description! Tell everyone what your mod is about!",
   "authors": [
     "Tetro48"
@@ -19,7 +19,7 @@
     ]
   },
   "custom": {
-    "btw:addon_prefix": "M"
+    "btw:addon_prefix": "MnS"
   },
   "mixins": [
     "momentum.mixins.json"
