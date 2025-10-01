@@ -27,6 +27,15 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements Mome
 	@Unique private int previousBlockID = 0;
 	@Unique
 	private int blocksBroken = 0;
+
+	@Override
+	public void momentum$setBlockID(int blockID) {
+		if (previousBlockID != blockID) {
+			previousBlockID = blockID;
+			momentum$resetBlocksBroken();
+		}
+	}
+
 	@Override
 	public int momentum$getBlocksBroken() {
 		return blocksBroken;
@@ -35,11 +44,6 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements Mome
 	@Override
 	public void momentum$incrementBlocksBroken() {
 		blocksBroken++;
-	}
-
-	@Override
-	public void momentum$decayBlocksBroken() {
-		blocksBroken = Math.max(0, (int)(blocksBroken * 0.9d - 1));
 	}
 
 	@Override
@@ -54,12 +58,9 @@ public abstract class EntityPlayerMixin extends EntityLivingBase implements Mome
 				(!this.isSneaking() && !this.isPotionActive(Potion.digSpeed)) ||
 				(this.isSprinting() && (!this.isPotionActive(Potion.digSpeed) || this.getActivePotionEffect(Potion.digSpeed).getAmplifier() < 1))
 		) {
-			momentum$resetBlocksBroken();
 			return;
 		}
 		if (par1Block.blockID != previousBlockID) {
-			previousBlockID = par1Block.blockID;
-			momentum$resetBlocksBroken();
 			return;
 		}
 		float curSpeed = cir.getReturnValue();
