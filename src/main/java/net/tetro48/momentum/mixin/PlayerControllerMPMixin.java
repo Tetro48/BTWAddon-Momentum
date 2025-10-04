@@ -31,7 +31,6 @@ public abstract class PlayerControllerMPMixin {
 		this.blockHitDelay -= swiftLevel;
 		boolean hasMomentum = EnchantmentHelper.getEnchantmentLevel(MomentumAddon.enchantmentMomentum.effectId, this.mc.thePlayer.getHeldItem()) > 0;
 		if (hasMomentum) {
-			System.out.println("blockID = " + block.blockID);
 			((MomentumAffected) this.mc.thePlayer).momentum$setBlockID(block.blockID);
 			((MomentumAffected) this.mc.thePlayer).momentum$incrementBlocksBroken();
 		}
