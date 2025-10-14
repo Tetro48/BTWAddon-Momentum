@@ -7,7 +7,7 @@
     "EnchantmentDiggingMixin",
     "EntityPlayerMixin",
     "InfernalEnchanterContainerMixin",
-    "NetServerHandlerMixin",
+    "ItemInWorldManagerMixin",
     "PlayerControllerMPMixin"
   ],
   "client": [],
