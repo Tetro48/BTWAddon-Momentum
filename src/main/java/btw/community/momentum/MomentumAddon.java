@@ -1,10 +1,9 @@
 package btw.community.momentum;
 
-import btw.AddonHandler;
-import btw.BTWAddon;
+import api.AddonHandler;
+import api.BTWAddon;
 import btw.crafting.recipe.RecipeManager;
 import btw.item.BTWItems;
-import btw.util.sounds.AddonSoundRegistryEntry;
 import net.minecraft.src.Enchantment;
 import net.minecraft.src.EnumEnchantmentType;
 import net.minecraft.src.Item;

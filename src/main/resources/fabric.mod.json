@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "id": "momentum_btw",
   "version": "${version}",
-  "name": "Momentum and Swift Enchantments Addon",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Ultra Enchantments Addon",
+  "description": "This addon adds some very powerful enchantments that must be crafted",
   "authors": [
     "Tetro48"
   ],
@@ -11,15 +11,12 @@
   "icon": "assets/momentum_btw/icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "net.tetro48.momentum.MomentumMod"
-    ],
     "btw:addon": [
       "btw.community.momentum.MomentumAddon"
     ]
   },
   "custom": {
-    "btw:addon_prefix": "MnS"
+    "btw:addon_prefix": "UEA"
   },
   "mixins": [
     "momentum.mixins.json"
