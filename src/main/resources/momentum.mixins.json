@@ -10,7 +10,9 @@
     "ItemInWorldManagerMixin",
     "PlayerControllerMPMixin"
   ],
-  "client": [],
+  "client": [
+    "GuiIngameMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
