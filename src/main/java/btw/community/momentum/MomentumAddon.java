@@ -10,6 +10,7 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.tetro48.momentum.EnchantmentMobSight;
 import net.tetro48.momentum.EnchantmentMomentum;
+import net.tetro48.momentum.EnchantmentReplenish;
 import net.tetro48.momentum.EnchantmentSwift;
 
 import java.util.Arrays;
@@ -20,9 +21,11 @@ public class MomentumAddon extends BTWAddon {
     public static final int MOMENTUM_ID = 61;
     public static final int SWIFT_ID = 62;
     public static final int MOB_SIGHT_ID = 63;
+    public static final int REPLENISH_ID = 64;
     public static Enchantment enchantmentMomentum = new EnchantmentMomentum(MOMENTUM_ID, 0, EnumEnchantmentType.digger);
     public static Enchantment enchantmentSwift = new EnchantmentSwift(SWIFT_ID, 0, EnumEnchantmentType.digger);
     public static Enchantment enchantmentMobSight = new EnchantmentMobSight(MOB_SIGHT_ID, 0, EnumEnchantmentType.all);
+    public static Enchantment enchantmentReplenish = new EnchantmentReplenish(REPLENISH_ID, 0, EnumEnchantmentType.digger);
 
     public MomentumAddon() {
         super();
@@ -39,6 +42,10 @@ public class MomentumAddon extends BTWAddon {
         );
         RecipeManager.addShapelessRecipe(new ItemStack(BTWItems.arcaneScroll, 1, MOB_SIGHT_ID), new Object[]{
                 Item.netherStar, Item.paper, BTWItems.soulFlux, Item.spiderEye, Item.spiderEye, Item.spiderEye, Item.spiderEye, Item.spiderEye, Item.spiderEye
+        });
+        //hehe a reference
+        RecipeManager.addShapelessRecipe(new ItemStack(BTWItems.arcaneScroll, 1, REPLENISH_ID), new Object[]{
+                Item.netherStar, Item.paper, BTWItems.soulFlux, Item.cookie
         });
         BTWItems.enderSpectacles.setInfernalMaxNumEnchants(1);
         BTWItems.enderSpectacles.setInfernalMaxEnchantmentCost(30);

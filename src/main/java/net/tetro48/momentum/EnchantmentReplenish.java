@@ -1,12 +1,13 @@
 package net.tetro48.momentum;
 
 import net.minecraft.src.Enchantment;
+import net.minecraft.src.EnchantmentDigging;
 import net.minecraft.src.EnumEnchantmentType;
 
-public class EnchantmentSwift extends Enchantment {
-	public EnchantmentSwift(int par1, int par2, EnumEnchantmentType par3EnumEnchantmentType) {
+public class EnchantmentReplenish extends Enchantment {
+	public EnchantmentReplenish(int par1, int par2, EnumEnchantmentType par3EnumEnchantmentType) {
 		super(par1, par2, par3EnumEnchantmentType);
-		this.setName("swift");
+		this.setName("replenish");
 	}
 
 	@Override
@@ -15,12 +16,7 @@ public class EnchantmentSwift extends Enchantment {
 	}
 
 	@Override
-	public int getMaxLevel() {
-		return 4;
-	}
-
-	@Override
 	public boolean canApplyTogether(Enchantment par1Enchantment) {
-		return !(par1Enchantment instanceof EnchantmentReplenish) && super.canApplyTogether(par1Enchantment);
+		return !(par1Enchantment instanceof EnchantmentSwift) && super.canApplyTogether(par1Enchantment);
 	}
 }
